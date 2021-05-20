@@ -21,14 +21,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-/**
- * Created by Aman on 04/10/17.
- */
 package com.hypertrack.hyperlog_demo;
 
 import android.content.Context;
 
-import com.hypertrack.hyperlog.LogFormat;
+import com.hyper.hyperlog.LogFormat;
 
 class CustomLogMessageFormat extends LogFormat {
 
@@ -39,7 +36,6 @@ class CustomLogMessageFormat extends LogFormat {
     @Override
     public String getFormattedLogMessage(String logLevelName, String tag, String message, String timeStamp,
                                          String senderName, String osVersion, String deviceUUID) {
-        String formattedMessage = timeStamp + " : " + logLevelName+"/"+tag + " : " + deviceUUID + " : " + message;
-        return formattedMessage;
+        return timeStamp + " : " + logLevelName+"/"+tag + " : " + deviceUUID + " : " + message;
     }
 }

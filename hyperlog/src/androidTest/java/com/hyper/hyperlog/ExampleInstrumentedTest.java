@@ -1,4 +1,4 @@
-package com.hypertrack.hyperlog;
+package com.hyper.hyperlog;
 
 import android.content.Context;
 

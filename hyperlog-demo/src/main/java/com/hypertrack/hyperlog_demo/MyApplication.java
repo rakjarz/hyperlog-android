@@ -26,7 +26,7 @@ package com.hypertrack.hyperlog_demo;
 import android.app.Application;
 import android.util.Log;
 
-import com.hypertrack.hyperlog.HyperLog;
+import com.hyper.hyperlog.HyperLog;
 
 /**
  * Created by Aman on 04/10/17.

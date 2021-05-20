@@ -1,4 +1,4 @@
-package com.hypertrack.hyperlog;
+package com.hyper.hyperlog;
 
 public class LogData {
     final String logLevelName;

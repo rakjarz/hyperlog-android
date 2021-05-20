@@ -22,7 +22,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-package com.hypertrack.hyperlog;
+package com.hyper.hyperlog;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -30,7 +30,7 @@ import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.text.TextUtils;
 
-import com.hypertrack.hyperlog.utils.HLDateTimeUtility;
+import com.hyper.hyperlog.utils.HLDateTimeUtility;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -188,7 +188,7 @@ class DeviceLogTable {
 
         ArrayList<DeviceLogModel> deviceLogList = null;
 
-        String limit = String.valueOf(batch * DEVICE_LOG_REQUEST_QUERY_LIMIT) + ", " + String.valueOf(DEVICE_LOG_REQUEST_QUERY_LIMIT);
+        String limit = batch * DEVICE_LOG_REQUEST_QUERY_LIMIT + ", " + DEVICE_LOG_REQUEST_QUERY_LIMIT;
 
         Cursor cursor = db.query(TABLE_NAME, new String[]{COLUMN_ID, COLUMN_DEVICE_LOG}, null, null,
                 null, null, null, limit);
@@ -210,7 +210,7 @@ class DeviceLogTable {
 
                         // Get RowId for DeviceLogModel
                         Integer rowId = Integer.valueOf(cursor.getString(0));
-                        deviceLog.setId(rowId != null ? rowId : 0);
+                        deviceLog.setId(rowId);
 
                         deviceLogList.add(deviceLog);
                     }

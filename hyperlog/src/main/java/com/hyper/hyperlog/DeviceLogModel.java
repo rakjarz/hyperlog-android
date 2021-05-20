@@ -22,12 +22,12 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-package com.hypertrack.hyperlog;
+package com.hyper.hyperlog;
 
 import com.google.gson.annotations.Expose;
 
-/**
- * Created by Aman Jain on 22/09/17.
+/*
+  Created by Aman Jain on 22/09/17.
  */
 /** package */
 public class DeviceLogModel {

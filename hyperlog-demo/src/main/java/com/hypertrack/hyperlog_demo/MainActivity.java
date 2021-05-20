@@ -33,7 +33,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.hypertrack.hyperlog.HyperLog;
+import com.hyper.hyperlog.HyperLog;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     EditText editText;
-    ListView listView = findViewById(R.id.listView);
+    ListView listView;
     List<String> logsList = new ArrayList<>();
     ArrayAdapter<String> listAdapter;
     int batchNumber = 1;
@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
         //Set Custom Log Message Format.
         HyperLog.setLogFormat(new CustomLogMessageFormat(this));
         editText = findViewById(R.id.logText);
+        listView = findViewById(R.id.listView);
         listAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, logsList);
         listView.setAdapter(listAdapter);
     }

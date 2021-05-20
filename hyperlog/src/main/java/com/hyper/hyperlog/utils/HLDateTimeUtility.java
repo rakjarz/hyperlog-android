@@ -22,11 +22,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-package com.hypertrack.hyperlog.utils;
+package com.hyper.hyperlog.utils;
 
 import android.text.TextUtils;
 
-import com.hypertrack.hyperlog.HyperLog;
+import com.hyper.hyperlog.HyperLog;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -57,7 +57,7 @@ public class HLDateTimeUtility {
             HyperLog.e("HYPERLOG", "Exception while getCurrentTime: " + e);
             currentTime = "";
         }
-        return currentTime != null ? currentTime : "";
+        return currentTime;
     }
 
     public static String getFormattedTime(Date date) {

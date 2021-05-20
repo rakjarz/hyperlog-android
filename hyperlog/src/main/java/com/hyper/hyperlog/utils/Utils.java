@@ -22,7 +22,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-package com.hypertrack.hyperlog.utils;
+package com.hyper.hyperlog.utils;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -31,9 +31,9 @@ import android.provider.Settings;
 import android.text.TextUtils;
 
 import com.google.gson.GsonBuilder;
-import com.hypertrack.hyperlog.DeviceLogModel;
-import com.hypertrack.hyperlog.HyperLog;
-import com.hypertrack.hyperlog.LogFormat;
+import com.hyper.hyperlog.DeviceLogModel;
+import com.hyper.hyperlog.HyperLog;
+import com.hyper.hyperlog.LogFormat;
 
 import java.io.BufferedWriter;
 import java.io.File;

@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-package com.hypertrack.hyperlog;
+package com.hyper.hyperlog;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -31,8 +31,8 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.hypertrack.hyperlog.utils.HLDateTimeUtility;
-import com.hypertrack.hyperlog.utils.Utils;
+import com.hyper.hyperlog.utils.HLDateTimeUtility;
+import com.hyper.hyperlog.utils.Utils;
 
 import java.io.File;
 import java.util.ArrayList;
