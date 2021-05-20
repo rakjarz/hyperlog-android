@@ -29,7 +29,6 @@ import android.os.Build;
 import android.provider.Settings;
 import android.util.Log;
 
-import com.android.volley.BuildConfig;
 import com.google.gson.Gson;
 import com.hypertrack.hyperlog.utils.HLDateTimeUtility;
 
@@ -61,7 +60,7 @@ public class LogFormat implements Serializable {
      */
     String formatLogMessage(int logLevel, String tag, String message) {
         String timeStamp = HLDateTimeUtility.getCurrentTime();
-        String senderName = BuildConfig.VERSION_NAME;
+        String senderName = Build.USER;
         String osVersion = "Android-" + Build.VERSION.RELEASE;
         String logLevelName = getLogLevelName(logLevel);
         return getFormattedLogMessage(logLevelName, tag, message, timeStamp, senderName, osVersion, deviceUUID);

@@ -32,7 +32,7 @@ import java.util.List;
  * Created by Aman on 22/09/17.
  */
 class DeviceLogList {
-    private DeviceLogDataSource mDeviceLogDataSource;
+    private final DeviceLogDataSource mDeviceLogDataSource;
 
     DeviceLogList(DeviceLogDataSource mDeviceLogDataSource) {
         this.mDeviceLogDataSource = mDeviceLogDataSource;

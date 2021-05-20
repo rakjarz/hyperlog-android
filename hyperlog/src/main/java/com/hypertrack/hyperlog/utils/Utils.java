@@ -24,6 +24,7 @@ SOFTWARE.
 */
 package com.hypertrack.hyperlog.utils;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.provider.Settings;
@@ -93,7 +94,7 @@ public class Utils {
     }
 
     public static String getDeviceId(Context context) {
-        String device_uuid = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+        @SuppressLint("HardwareIds") String device_uuid = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
         return device_uuid != null ? device_uuid : "";
     }
 
