@@ -1,5 +1,4 @@
 apply plugin: 'com.android.library'
-apply plugin: 'maven'
 
 ext {
     bintrayRepo = 'maven'
@@ -26,14 +25,12 @@ ext {
 }
 
 android {
-    compileSdkVersion 27
-    buildToolsVersion '27.0.3'
+    compileSdkVersion 30
+    buildToolsVersion '30.0.3'
 
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 27
-        versionCode 1
-        versionName "1.0"
+        targetSdkVersion 30
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -50,21 +47,21 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    api fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:27.1.1'
-    compile 'com.android.volley:volley:1.0.0'
-    compile 'com.google.code.gson:gson:2.8.1'
-    testCompile 'junit:junit:4.12'
+    api 'androidx.appcompat:appcompat:1.3.0'
+    api 'com.android.volley:volley:1.2.0'
+    api 'com.google.code.gson:gson:2.8.6'
+    testImplementation 'junit:junit:4.13.2'
 }
 
 def computeVersionName() {
     def versionPropsFile = file('gradle.properties')
 
     if (versionPropsFile.canRead()) {
-        def Properties versionProps = new Properties()
+        Properties versionProps = new Properties()
 
         versionProps.load(new FileInputStream(versionPropsFile))
 
@@ -72,7 +69,7 @@ def computeVersionName() {
 
         def runTasks = gradle.startParameter.taskNames
         if ('internalRelease' in runTasks || 'iR' in runTasks) {
-            value = 1;
+            value = 1
         }
 
         def versionMajor = 0
@@ -91,7 +88,7 @@ def computeVersionName() {
     }
 }
 
-if (project.rootProject.file('local.properties').exists()) {
-    apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
-    apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
-}
+//if (project.rootProject.file('local.properties').exists()) {
+//    apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
+//    apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
+//}

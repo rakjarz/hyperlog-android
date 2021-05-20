@@ -23,20 +23,18 @@ SOFTWARE.
 */
 package com.hypertrack.hyperlog;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Build;
 import android.provider.Settings;
 import android.util.Log;
 
+import com.android.volley.BuildConfig;
 import com.google.gson.Gson;
 import com.hypertrack.hyperlog.utils.HLDateTimeUtility;
 
 import java.io.Serializable;
 
-
-/**
- * Created by Aman on 10/10/17.
- */
 
 /**
  * This class can be overridden to customise the log message format.
@@ -50,7 +48,7 @@ public class LogFormat implements Serializable {
 
     public LogFormat(Context context) {
         Context mContext = context.getApplicationContext();
-        String uuid = Settings.Secure.getString(mContext.getContentResolver(), Settings.Secure.ANDROID_ID);
+        @SuppressLint("HardwareIds") String uuid = Settings.Secure.getString(mContext.getContentResolver(), Settings.Secure.ANDROID_ID);
         deviceUUID = uuid == null ? "UnknownUUID": uuid;
     }
 

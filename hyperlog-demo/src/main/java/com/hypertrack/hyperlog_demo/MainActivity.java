@@ -24,8 +24,6 @@ SOFTWARE.
 package com.hypertrack.hyperlog_demo;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -33,6 +31,9 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.hypertrack.hyperlog.HLCallback;
 import com.hypertrack.hyperlog.HyperLog;
@@ -52,9 +53,9 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     EditText editText, endPointUrl;
-    ListView listView;
+    ListView listView = findViewById(R.id.listView);
     List<String> logsList = new ArrayList<>();
-    ArrayAdapter listAdapter;
+    ArrayAdapter<String> listAdapter;
     int batchNumber = 1;
     int count = 0;
     String[] logs = new String[]{"Download Library", "Library Downloaded", "Initialize Library", "Library Initialized", "Log Message", "Message Logged",
@@ -68,9 +69,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         //Set Custom Log Message Format.
         HyperLog.setLogFormat(new CustomLogMessageFormat(this));
-        endPointUrl = (EditText) findViewById(R.id.end_point_url);
-        editText = (EditText) findViewById(R.id.logText);
-        listView = (ListView) findViewById(R.id.listView);
+        endPointUrl = findViewById(R.id.end_point_url);
+        editText = findViewById(R.id.logText);
         listAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, logsList);
         listView.setAdapter(listAdapter);
     }
