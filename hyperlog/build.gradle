@@ -1,15 +1,7 @@
 apply plugin: 'com.android.library'
+apply plugin: 'maven-publish'
 
 ext {
-    bintrayRepo = 'maven'
-    bintrayName = 'hyperlog'
-
-    publishedGroupId = 'com.hypertrack'
-    libraryName = 'hyperlog'
-    artifact = 'hyperlog'
-
-    libraryDescription = 'A utility logger library for Android on top of standard Android Log class for debugging purpose. This is a simple library that will allow Android apps or library to store log into database so that developer can pull the logs from the database into File or push the logs to your remote server for debugging purpose.'
-
     siteUrl = 'https://github.com/hypertrack/hyperlog-android'
     gitUrl = 'https://github.com/hypertrack/hyperlog-android.git'
 
@@ -24,6 +16,32 @@ ext {
     allLicenses = ["MIT"]
 }
 
+afterEvaluate{
+    publishing {
+        publications {
+            release(MavenPublication) {
+                // Applies the component for the release build variant.
+                from components.release
+
+                // You can then customize attributes of the publication as shown below.
+                groupId = 'com.hyper'
+                artifactId = 'hyperlog'
+                version = computeVersionName()
+            }
+            // Creates a Maven publication called “debug”.
+            debug(MavenPublication) {
+                // Applies the component for the release build variant.
+                from components.debug
+
+                // You can then customize attributes of the publication as shown below.
+                groupId = 'com.hyper'
+                artifactId = 'hyperlog-debug'
+                version = computeVersionName()
+            }
+        }
+    }
+}
+
 android {
     compileSdkVersion 30
     buildToolsVersion '30.0.3'
@@ -32,15 +50,20 @@ android {
         minSdkVersion 14
         targetSdkVersion 30
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }
+
+    lintOptions {
+        abortOnError false
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
     testOptions {
         unitTests.returnDefaultValues = true
     }
@@ -72,7 +95,7 @@ def computeVersionName() {
             value = 1
         }
 
-        def versionMajor = 0
+        def versionMajor = 1
         def versionMinor = 0
         def versionPatch = versionProps['VERSION_PATCH'].toInteger() + value
         def versionBuild = versionProps['VERSION_BUILD'].toInteger() + 1
