@@ -24,7 +24,7 @@ afterEvaluate{
                 from components.release
 
                 // You can then customize attributes of the publication as shown below.
-                groupId = 'com.hyper'
+                groupId = 'com.hypertrack'
                 artifactId = 'hyperlog'
                 version = computeVersionName()
             }
@@ -34,7 +34,7 @@ afterEvaluate{
                 from components.debug
 
                 // You can then customize attributes of the publication as shown below.
-                groupId = 'com.hyper'
+                groupId = 'com.hypertrack'
                 artifactId = 'hyperlog-debug'
                 version = computeVersionName()
             }

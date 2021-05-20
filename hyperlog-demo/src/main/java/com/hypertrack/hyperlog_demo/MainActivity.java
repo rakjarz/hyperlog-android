@@ -34,7 +34,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.hyper.hyperlog.HyperLog;
+import com.hypertrack.hyperlog.HyperLog;
 
 import java.io.File;
 import java.util.ArrayList;

@@ -22,11 +22,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-package com.hyper.hyperlog.utils;
+package com.hypertrack.hyperlog.utils;
 
 import android.text.TextUtils;
 
-import com.hyper.hyperlog.HyperLog;
+import com.hypertrack.hyperlog.HyperLog;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

@@ -1,4 +1,4 @@
-package com.hyper.hyperlog;
+package com.hypertrack.hyperlog;
 
 import org.junit.Test;
 

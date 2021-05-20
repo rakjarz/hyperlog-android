@@ -25,7 +25,7 @@ package com.hypertrack.hyperlog_demo;
 
 import android.content.Context;
 
-import com.hyper.hyperlog.LogFormat;
+import com.hypertrack.hyperlog.LogFormat;
 
 class CustomLogMessageFormat extends LogFormat {
 

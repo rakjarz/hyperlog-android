@@ -22,7 +22,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-package com.hyper.hyperlog;
+package com.hypertrack.hyperlog;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -30,7 +30,7 @@ import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.text.TextUtils;
 
-import com.hyper.hyperlog.utils.HLDateTimeUtility;
+import com.hypertrack.hyperlog.utils.HLDateTimeUtility;
 
 import java.util.ArrayList;
 import java.util.Calendar;
