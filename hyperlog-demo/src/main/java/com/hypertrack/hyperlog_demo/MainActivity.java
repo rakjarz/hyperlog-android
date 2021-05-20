@@ -52,7 +52,7 @@ import java.util.TimeZone;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
-    EditText editText, endPointUrl;
+    EditText editText;
     ListView listView = findViewById(R.id.listView);
     List<String> logsList = new ArrayList<>();
     ArrayAdapter<String> listAdapter;
@@ -69,19 +69,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         //Set Custom Log Message Format.
         HyperLog.setLogFormat(new CustomLogMessageFormat(this));
-        endPointUrl = findViewById(R.id.end_point_url);
         editText = findViewById(R.id.logText);
         listAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, logsList);
         listView.setAdapter(listAdapter);
-    }
-
-    public void setEndPoint(View view) {
-        String url = endPointUrl.getText().toString();
-        if (TextUtils.isEmpty(url)) {
-            Toast.makeText(this, "Url can't be empty.", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        HyperLog.setURL(url);
     }
 
     public void showLogs(View view) {
@@ -118,34 +108,6 @@ public class MainActivity extends AppCompatActivity {
         logsList.clear();
         logsList.addAll(HyperLog.getDeviceLogsAsStringList(false, ++batchNumber));
         listAdapter.notifyDataSetChanged();
-    }
-
-    public void pushLog(View view) {
-
-        if (TextUtils.isEmpty(HyperLog.getURL())) {
-            Toast.makeText(this, "Set EndPoint URL First", Toast.LENGTH_SHORT).show();
-            endPointUrl.requestFocus();
-            return;
-        }
-        //Extra header to post request
-        HashMap<String, String> params = new HashMap<>();
-        params.put("timezone", TimeZone.getDefault().getID());
-
-        HyperLog.pushLogs(this, params, true, new HLCallback() {
-            @Override
-            public void onSuccess(@NonNull Object response) {
-                showToast("Log Pushed");
-                Log.d(TAG, "onSuccess: " + response);
-                logsList.clear();
-                listAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onError(@NonNull HLErrorResponse HLErrorResponse) {
-                showToast("Log Push Error");
-                Log.e(TAG, "onError: " + HLErrorResponse.getErrorMessage());
-            }
-        });
     }
 
     private void showToast(String message) {

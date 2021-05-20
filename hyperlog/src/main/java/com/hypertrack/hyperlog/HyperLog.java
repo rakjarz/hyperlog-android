@@ -24,22 +24,18 @@ SOFTWARE.
 
 package com.hypertrack.hyperlog;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.hypertrack.hyperlog.error.HLErrorResponse;
 import com.hypertrack.hyperlog.utils.HLDateTimeUtility;
 import com.hypertrack.hyperlog.utils.Utils;
-import com.hypertrack.hyperlog.utils.VolleyUtils;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -56,9 +52,9 @@ public class HyperLog {
     private static int logLevel = Log.WARN;
 
     private static DeviceLogList mDeviceLogList;
-    private static String URL;
     private static final int EXPIRY_TIME = 7 * 24 * 60 * 60;// 7 Days
     private static LogFormat mLogFormat;
+    @SuppressLint("StaticFieldLeak")
     private static Context context;
     private static ExecutorService executorService;
 
@@ -81,7 +77,7 @@ public class HyperLog {
      * @param logFormat {@link LogFormat} to set custom log message format.
      * @see #initialize(Context, int, LogFormat)
      */
-    public static void initialize(@NonNull Context context, @NonNull LogFormat logFormat) {
+    public static void initialize(@NonNull Context context, LogFormat logFormat) {
         initialize(context, EXPIRY_TIME, logFormat);
     }
 
@@ -108,12 +104,7 @@ public class HyperLog {
      * @see #initialize(Context)
      */
     public static void initialize(@NonNull Context context, int expiryTimeInSeconds,
-                                  @NonNull LogFormat logFormat) {
-
-        if (context == null) {
-            Log.e(TAG, "HyperLog isn't initialized: Context couldn't be null");
-            return;
-        }
+                                  LogFormat logFormat) {
 
         HyperLog.context = context.getApplicationContext();
 
@@ -151,25 +142,6 @@ public class HyperLog {
             return false;
         }
         return true;
-    }
-
-    /**
-     * Call this method to set a valid end point URL where logs need to be pushed.
-     *
-     * @param url URL of the endpoint
-     * @throws IllegalArgumentException if the url is empty or null
-     */
-    public static void setURL(String url) {
-        if (TextUtils.isEmpty(url))
-            throw new IllegalArgumentException("API URL cannot be null or empty");
-        URL = url;
-    }
-
-    /**
-     * Call this method to get a end point URL where logs need to be pushed.
-     */
-    public static String getURL() {
-        return URL;
     }
 
     /**
@@ -299,17 +271,14 @@ public class HyperLog {
             if (executorService == null)
                 executorService = Executors.newSingleThreadExecutor();
 
-            Runnable runnable = new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        if (!isInitialize() || message == null || message.isEmpty())
-                            return;
+            Runnable runnable = () -> {
+                try {
+                    if (!isInitialize() || message == null || message.isEmpty())
+                        return;
 
-                        mDeviceLogList.addDeviceLog(message);
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
-                    }
+                    mDeviceLogList.addDeviceLog(message);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
                 }
             };
 
@@ -538,162 +507,6 @@ public class HyperLog {
             return 0;
 
         return mDeviceLogList.getDeviceLogBatchCount();
-    }
-
-    /**
-     * Call this method to push logs from device to the server as a text file or gzip compressed file.
-     * <p>
-     * Logs will get delete from the device once it successfully push to the server.
-     * <p>
-     * If device log count is greater than {@value DeviceLogTable#DEVICE_LOG_REQUEST_QUERY_LIMIT} then
-     * log will push to the server in batches.
-     *
-     * @param mContext The current context.
-     * @param compress True, if logs will push to server in GZIP compressed format, false otherwise.
-     * @param callback Instance of {@link HLCallback}.
-     * @throws IllegalArgumentException if the API endpoint url is empty or null
-     */
-    public static void pushLogs(Context mContext, boolean compress, HLCallback callback) {
-        pushLogs(mContext, null, null, compress, callback);
-    }
-
-    /**
-     * Call this method to push logs from device to the server with custom filename as a text file
-     * or gzip compressed file.
-     * <p>
-     * Logs will get delete from the device once it successfully push to the server.
-     * <p>
-     * If device log count is greater than {@value DeviceLogTable#DEVICE_LOG_REQUEST_QUERY_LIMIT} then
-     * log will push to the server in batches.
-     *
-     * @param mContext The current context.
-     * @param fileName Name of the file that you want to receive on your server.
-     * @param compress True, if logs will push to server in GZIP compressed format, false otherwise.
-     * @param callback Instance of {@link HLCallback}.
-     * @throws IllegalArgumentException if the API endpoint url is empty or null
-     */
-    public static void pushLogs(Context mContext, String fileName, boolean compress,
-                                HLCallback callback) {
-        pushLogs(mContext, fileName, null, compress, callback);
-    }
-
-    /**
-     * Call this method to push logs from device to the server as a text file or gzip compressed file.
-     * <p>
-     * Logs will get delete from the device once it successfully push to the server.
-     * <p>
-     * If device log count is greater than {@value DeviceLogTable#DEVICE_LOG_REQUEST_QUERY_LIMIT} then
-     * log will push to the server in batches.
-     *
-     * @param mContext          The current context.
-     * @param additionalHeaders Additional Headers to pass along with request.
-     * @param compress          True, if logs will push to server in GZIP compressed format,
-     *                          false otherwise.
-     * @param callback          Instance of {@link HLCallback}.
-     * @throws IllegalArgumentException if the API endpoint url is empty or null
-     */
-    public static void pushLogs(Context mContext, HashMap<String, String> additionalHeaders,
-                                boolean compress, HLCallback callback) {
-        pushLogs(mContext, null, additionalHeaders, compress, callback);
-    }
-
-    /**
-     * Call this method to push logs from device to the server with custom filename as a text file
-     * or gzip compressed file.
-     * <p>
-     * Logs will get delete from the device once it successfully push to the server.
-     * <p>
-     * If device log count is greater than {@value DeviceLogTable#DEVICE_LOG_REQUEST_QUERY_LIMIT}
-     * then log will push to the server in batches.
-     *
-     * @param fileName          Name of the file that you want to receive on your server.
-     * @param mContext          The current context.
-     * @param additionalHeaders Additional Headers to pass along with request.
-     * @param compress          True, if logs will push to server in GZIP compressed format,
-     *                          false otherwise.
-     * @param callback          Instance of {@link HLCallback}.
-     * @throws IllegalArgumentException if the API endpoint url is empty or null
-     */
-    public static void pushLogs(Context mContext, String fileName, HashMap<String,
-            String> additionalHeaders, boolean compress, final HLCallback callback) {
-
-        if (!isInitialize())
-            return;
-
-        if (TextUtils.isEmpty(URL)) {
-            HyperLog.e("HYPERLOG", "API endpoint URL is missing. Set URL using " +
-                    "HyperLog.setURL method");
-            return;
-        }
-
-        VolleyUtils.cancelPendingRequests(mContext, TAG);
-
-        if (TextUtils.isEmpty(URL)) {
-            HyperLog.e("HYPERLOG", "URL is missing. Please set the URL to push the logs.");
-            return;
-        }
-        if (!hasPendingDeviceLogs())
-            return;
-
-        //Check how many batches of device logs are available to push
-        int logsBatchCount = getDeviceLogBatchCount();
-
-        final int[] temp = {logsBatchCount};
-        final boolean[] isAllLogsPushed = {true};
-
-        while (logsBatchCount != 0) {
-
-            final List<DeviceLogModel> deviceLogs = getDeviceLogs(false, logsBatchCount);
-            deviceLogs.add(new DeviceLogModel(getFormattedLog(Log.INFO, TAG_HYPERLOG,
-                    "Log Counts: " + deviceLogs.size() + " | File Size: " +
-                            deviceLogs.toString().length() + " bytes.")));
-            //Get string data into byte format.
-            byte[] bytes = Utils.getByteData(deviceLogs);
-
-            if (TextUtils.isEmpty(fileName)) {
-                fileName = HLDateTimeUtility.getCurrentTime() + ".txt";
-            }
-
-            HLHTTPMultiPartPostRequest hlHTTPMultiPartPostRequest =
-                    new HLHTTPMultiPartPostRequest<>(URL, bytes, fileName, additionalHeaders,
-                            mContext, Object.class, compress, new Response.Listener<Object>() {
-                        @Override
-                        public void onResponse(Object response) {
-                            temp[0]--;
-                            mDeviceLogList.clearDeviceLogs(deviceLogs);
-                            HyperLog.i("HYPERLOG", "Log has been pushed");
-
-                            if (callback != null && temp[0] == 0) {
-                                if (isAllLogsPushed[0]) {
-                                    callback.onSuccess(response);
-                                } else {
-                                    HLErrorResponse HLErrorResponse = new HLErrorResponse(
-                                            "All logs hasn't been pushed");
-                                    callback.onError(HLErrorResponse);
-                                }
-                            }
-                        }
-                    }, new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            HLErrorResponse HLErrorResponse = new HLErrorResponse(error);
-                            isAllLogsPushed[0] = false;
-                            temp[0]--;
-                            error.printStackTrace();
-                            HyperLog.exception(TAG, "Error has occurred while pushing " +
-                                    "logs: ", error);
-
-                            if (temp[0] == 0) {
-                                if (callback != null) {
-                                    callback.onError(HLErrorResponse);
-                                }
-                            }
-                        }
-                    });
-
-            VolleyUtils.addToRequestQueue(mContext, hlHTTPMultiPartPostRequest, TAG);
-            logsBatchCount--;
-        }
     }
 
     /**
