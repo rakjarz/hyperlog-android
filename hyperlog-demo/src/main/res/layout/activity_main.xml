@@ -14,10 +14,12 @@
         android:layout_marginTop="8dp"
         android:layout_marginRight="8dp"
         android:hint="@string/enter_log"
+        android:inputType="textFilter|textMultiLine"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:importantForAutofill="no" />
 
     <Button
         android:id="@+id/button"
@@ -26,7 +28,6 @@
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:onClick="addLog"
         android:text="@string/add_log"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logText" />
@@ -40,7 +41,6 @@
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:onClick="showLogs"
         android:text="@string/show_logs"
         app:layout_constraintLeft_toRightOf="@+id/button"
         app:layout_constraintRight_toLeftOf="@+id/button3"
@@ -51,7 +51,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:onClick="getFile"
         android:text="@string/get_file"
         app:layout_constraintRight_toLeftOf="@+id/button4"
         app:layout_constraintTop_toBottomOf="@+id/logText" />
@@ -63,7 +62,6 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
-        android:onClick="deleteLogs"
         android:text="@string/delete"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logText" />
@@ -75,7 +73,6 @@
         android:layout_marginLeft="8dp"
         android:layout_marginTop="56dp"
         android:layout_marginRight="8dp"
-        android:onClick="nextLog"
         android:text="@string/next_log"
         android:visibility="visible"
         app:layout_constraintLeft_toLeftOf="parent"

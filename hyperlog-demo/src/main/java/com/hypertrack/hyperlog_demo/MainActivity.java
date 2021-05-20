@@ -27,6 +27,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -56,6 +57,11 @@ public class MainActivity extends AppCompatActivity {
             "Create Log File", "Log File Created", "Push Logs to Server", "Logs Pushed to Server", "Logs Deleted", "Library Downloaded", "Library Initialized", "Message Logged",
             "Log File Created", "Logs Pushed to Server", "Logs Deleted"};
     Toast toast;
+    private Button btnAdd;
+    private Button btnShow;
+    private Button btnGetFile;
+    private Button btnDelete;
+    private Button btnNext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +71,16 @@ public class MainActivity extends AppCompatActivity {
         HyperLog.setLogFormat(new CustomLogMessageFormat(this));
         editText = findViewById(R.id.logText);
         listView = findViewById(R.id.listView);
+        btnAdd = findViewById(R.id.button);
+        btnAdd.setOnClickListener(this::addLog);
+        btnShow = findViewById(R.id.button2);
+        btnShow.setOnClickListener(this::showLogs);
+        btnGetFile = findViewById(R.id.button3);
+        btnGetFile.setOnClickListener(this::getFile);
+        btnDelete = findViewById(R.id.button4);
+        btnDelete.setOnClickListener(this::deleteLogs);
+        btnNext = findViewById(R.id.button5);
+        btnNext.setOnClickListener(this::nextLog);
         listAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, logsList);
         listView.setAdapter(listAdapter);
     }
